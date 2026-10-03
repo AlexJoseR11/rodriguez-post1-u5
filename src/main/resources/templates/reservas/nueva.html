@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Reserva de Laboratorio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --danger: #dc2626;
+            --danger-bg: #fee2e2;
+            --danger-text: #b91c1c;
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            padding: 2.5rem 1rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid #e2e8f0;
+            box-shadow: var(--shadow-md);
+            padding: 2.25rem;
+        }
+
+        .card-header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 1.25rem;
+        }
+
+        .card-header h1 {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+        }
+
+        .card-header p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+
+        .alert {
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1.75rem;
+            font-size: 0.925rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .alert-danger {
+            background-color: var(--danger-bg);
+            color: var(--danger-text);
+            border: 1px solid #fecaca;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 0.45rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            font-size: 0.925rem;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background-color: #ffffff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.7rem 1.4rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-secondary {
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e2e8f0;
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Nueva Reserva de Laboratorio</h1>
+            <p>Complete los datos solicitados. Los horarios permitidos son de 07:00 a 21:00 (mínimo 30 min, máximo 3 h).</p>
+        </div>
+
+        <!-- Error Alert -->
+        <div id="alert-error" th:if="${error}" class="alert alert-danger">
+            <span>⚠</span>
+            <span th:text="${error}">Error al procesar la reserva</span>
+        </div>
+
+        <form id="form-reserva" th:action="@{/reservas}" th:object="${reserva}" method="post">
+            <div class="form-group">
+                <label for="laboratorioSelect">Laboratorio *</label>
+                <select id="laboratorioSelect" name="laboratorio.id" class="form-control" required>
+                    <option value="" disabled selected th:if="${reserva.laboratorio == null or reserva.laboratorio.id == null}">-- Seleccione un laboratorio --</option>
+                    <option th:each="lab : ${laboratorios}"
+                            th:value="${lab.id}"
+                            th:text="|${lab.nombre} (${lab.ubicacion} - Capacidad: ${lab.capacidad} personas)|"
+                            th:selected="${reserva.laboratorio != null and reserva.laboratorio.id == lab.id}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nombreSolicitante">Nombre del Solicitante *</label>
+                    <input type="text" id="nombreSolicitante" name="nombreSolicitante" th:field="*{nombreSolicitante}" class="form-control" placeholder="Ej: Dr. Juan Pérez" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="correoSolicitante">Correo Electrónico *</label>
+                    <input type="email" id="correoSolicitante" name="correoSolicitante" th:field="*{correoSolicitante}" class="form-control" placeholder="juan.perez@universidad.edu" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="inicio">Fecha y Hora de Inicio *</label>
+                    <input type="datetime-local" id="inicio" name="inicio" th:field="*{inicio}" class="form-control" required>
+                    <div class="hint">Horario permitido: 07:00 - 21:00</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fin">Fecha y Hora de Fin *</label>
+                    <input type="datetime-local" id="fin" name="fin" th:field="*{fin}" class="form-control" required>
+                    <div class="hint">Duración: entre 30 min y 3 horas</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="motivo">Motivo de la Reserva</label>
+                <textarea id="motivo" name="motivo" th:field="*{motivo}" class="form-control" placeholder="Describa brevemente la actividad académica o práctica de laboratorio..."></textarea>
+            </div>
+
+            <div class="form-actions">
+                <a id="btn-cancelar" th:href="@{/reservas}" class="btn btn-secondary">Cancelar y Volver</a>
+                <button id="btn-submit" type="submit" class="btn btn-primary">Confirmar Reserva</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
